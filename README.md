@@ -115,6 +115,7 @@ A API sobe em **<http://localhost:8080/api>**. Na **primeira execução**, o Mon
 automaticamente a partir do `Script_Pokedex.sql`:
 
 ```text
+Conectando ao MongoDB: mongodb+srv://***:***@cluster0.xxxxx.mongodb.net/... (banco 'pokedex')
 Coleção 'types' populada com 18 documentos
 Coleção 'pokemons' populada com 151 documentos
 Coleção 'trainers' populada com 12 documentos
@@ -123,6 +124,20 @@ Coleção 'trainers' populada com 12 documentos
 Nas próximas execuções os dados existentes são mantidos (incluindo o que foi cadastrado,
 editado ou excluído pela aplicação). Para **voltar aos dados originais do script**, inicie com
 `SEED_RESET=true` (no `.env` ou como variável de ambiente) uma vez.
+
+No Atlas, os dados podem ser conferidos em **Database → Browse Collections → pokedex**.
+
+### Problemas de conexão
+
+Se o MongoDB não puder ser acessado, a API continua no ar e responde **503**. Em até 10 segundos,
+o terminal mostra um quadro **"NÃO FOI POSSÍVEL ACESSAR O MONGODB"** com o erro. Causas comuns:
+
+| Erro no terminal | Solução |
+| --- | --- |
+| `Timed out while waiting for a server...` | Libere seu IP em **Network Access** (redes de faculdade mudam de IP; `0.0.0.0/0` resolve para testes) |
+| `Authentication failed` / `bad auth` | Confira usuário e senha em **Database Access** (é o usuário do banco, não o login do site) |
+| Erro de URI inválida | Codifique caracteres especiais da senha (`@` → `%40`, `#` → `%23`, `/` → `%2F`) |
+| Conecta em `localhost` em vez do Atlas | O arquivo precisa se chamar exatamente `.env` (não `.env.txt`) e ficar dentro de `backend/` |
 
 Testes automatizados (não precisam de banco):
 
@@ -286,7 +301,7 @@ pokedex/
 │       │   ├── dto/                   # Corpos de requisição/resposta (records + Bean Validation)
 │       │   ├── exception/             # Exceções e GlobalExceptionHandler (Problem Details)
 │       │   ├── seed/                  # SqlScriptParser, PokedexSqlMapper, DataSeeder
-│       │   └── config/                # CORS
+│       │   └── config/                # CORS e timeout de conexão do MongoDB
 │       ├── main/resources/application.properties
 │       └── test/                      # Testes do parser, do service e do controller
 └── frontend/                          # Pokédex — React + Vite (evolução da Atividade 03)
