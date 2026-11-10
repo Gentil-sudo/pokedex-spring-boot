@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.dao.DataAccessResourceFailureException;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -53,8 +53,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 "Valor inválido para '%s': %s".formatted(ex.getName(), ex.getValue()));
     }
 
-    @ExceptionHandler(DataAccessResourceFailureException.class)
-    ProblemDetail handleDatabaseDown(DataAccessResourceFailureException ex) {
+    @ExceptionHandler(DataAccessException.class)
+    ProblemDetail handleDatabaseDown(DataAccessException ex) {
         log.error("Falha ao acessar o MongoDB", ex);
         return problem(HttpStatus.SERVICE_UNAVAILABLE, "Banco de dados indisponível",
                 "Não foi possível conectar ao MongoDB. Verifique a variável MONGODB_URI.");

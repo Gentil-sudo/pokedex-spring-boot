@@ -10,7 +10,10 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBooleanProperty;
 import org.springframework.core.io.Resource;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Component;
+
+import com.mongodb.MongoException;
 
 import br.com.pokedex.repository.PokemonRepository;
 import br.com.pokedex.repository.PokemonTypeRepository;
@@ -34,21 +37,61 @@ public class DataSeeder implements ApplicationRunner {
     private final TrainerRepository trainerRepository;
     private final Resource script;
     private final boolean reset;
+    private final String target;
 
     public DataSeeder(PokemonRepository pokemonRepository,
                       PokemonTypeRepository typeRepository,
                       TrainerRepository trainerRepository,
                       @Value("${app.seed.script}") Resource script,
-                      @Value("${app.seed.reset:false}") boolean reset) {
+                      @Value("${app.seed.reset:false}") boolean reset,
+                      @Value("${spring.mongodb.uri}") String uri,
+                      @Value("${spring.mongodb.database}") String database) {
         this.pokemonRepository = pokemonRepository;
         this.typeRepository = typeRepository;
         this.trainerRepository = trainerRepository;
         this.script = script;
         this.reset = reset;
+        this.target = "%s (banco '%s')".formatted(maskCredentials(uri), database);
     }
 
     @Override
     public void run(ApplicationArguments args) throws IOException {
+        log.info("Conectando ao MongoDB: {}", target);
+        try {
+            seed();
+        } catch (DataAccessException | MongoException ex) {
+            // Não derruba a aplicação: a API sobe e responde 503 com uma mensagem clara.
+            log.error("""
+
+                    ============================================================
+                     NÃO FOI POSSÍVEL ACESSAR O MONGODB
+                     Destino: {}
+                     Erro: {}
+
+                     Verifique:
+                      1. MONGODB_URI no arquivo backend/.env (veja .env.example)
+                      2. Usuário e senha (Atlas > Database Access)
+                      3. Seu IP liberado (Atlas > Network Access)
+                      4. Caracteres especiais da senha codificados (@ -> %40)
+                    ============================================================""",
+                    target, rootMessage(ex));
+        }
+    }
+
+    /** Esconde usuário e senha da connection string antes de exibi-la no log. */
+    static String maskCredentials(String uri) {
+        return uri.replaceFirst("//[^/@]+@", "//***:***@");
+    }
+
+    private static String rootMessage(Throwable ex) {
+        Throwable root = ex;
+        while (root.getCause() != null && root.getCause() != root) {
+            root = root.getCause();
+        }
+        return root.getMessage();
+    }
+
+    private void seed() throws IOException {
         if (reset) {
             log.warn("SEED_RESET=true: apagando as coleções pokemons, types e trainers");
             pokemonRepository.deleteAll();
@@ -60,7 +103,7 @@ public class DataSeeder implements ApplicationRunner {
         boolean needsPokemons = pokemonRepository.count() == 0;
         boolean needsTrainers = trainerRepository.count() == 0;
         if (!needsTypes && !needsPokemons && !needsTrainers) {
-            log.info("MongoDB já populado ({} Pokémon, {} tipos, {} treinadores)",
+            log.info("Conectado. MongoDB já populado ({} Pokémon, {} tipos, {} treinadores)",
                     pokemonRepository.count(), typeRepository.count(), trainerRepository.count());
             return;
         }
