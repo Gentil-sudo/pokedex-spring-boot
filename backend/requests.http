@@ -1,0 +1,113 @@
+### Coleção de requisições da API da Pokédex
+### Abra no VS Code (extensão "REST Client") ou no IntelliJ e clique em "Send Request".
+### Também é possível copiar para o Postman/Insomnia/Thunder Client.
+
+@api = http://localhost:8080/api
+
+### Lista todos os Pokémon
+GET {{api}}/pokemons
+
+### Busca um Pokémon pelo ID
+GET {{api}}/pokemons/25
+
+### Busca por parte do nome (sem diferenciar maiúsculas)
+GET {{api}}/pokemons?search=char
+
+### Busca pelo número
+GET {{api}}/pokemons?search=150
+
+### Filtra por tipo
+GET {{api}}/pokemons?type=Dragon
+
+### Combina nome + tipo
+GET {{api}}/pokemons?search=ga&type=Ghost
+
+### Treinadores que possuem um Pokémon
+GET {{api}}/pokemons/149/trainers
+
+### Cadastra um Pokémon (o ID é opcional: sem ele, usa o próximo número livre)
+POST {{api}}/pokemons
+Content-Type: application/json
+
+{
+  "id": 172,
+  "name": "Pichu",
+  "hp": 20,
+  "attack": 40,
+  "defense": 15,
+  "specialAttack": 35,
+  "specialDefense": 35,
+  "speed": 60,
+  "types": ["Electric"]
+}
+
+### Atualiza um Pokémon
+PUT {{api}}/pokemons/172
+Content-Type: application/json
+
+{
+  "name": "Pichu",
+  "hp": 25,
+  "attack": 45,
+  "defense": 20,
+  "specialAttack": 40,
+  "specialDefense": 40,
+  "speed": 65,
+  "types": ["Electric"],
+  "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/172.png"
+}
+
+### Remove um Pokémon (também o retira dos times dos treinadores)
+DELETE {{api}}/pokemons/172
+
+### Erro de validação (400 com a mensagem de cada campo)
+POST {{api}}/pokemons
+Content-Type: application/json
+
+{ "name": "", "hp": 0, "attack": 300, "types": ["Fire", "Water", "Grass"] }
+
+### Tipo inexistente (400)
+POST {{api}}/pokemons
+Content-Type: application/json
+
+{ "name": "Togepi", "hp": 35, "attack": 20, "defense": 65, "specialAttack": 40, "specialDefense": 65, "speed": 20, "types": ["Fairy"] }
+
+### Pokémon inexistente (404)
+GET {{api}}/pokemons/9999
+
+### ===== Tipos =====
+
+GET {{api}}/types
+
+### ===== Treinadores =====
+
+### Lista os treinadores com os Pokémon de cada time
+GET {{api}}/trainers
+
+### Busca um treinador
+GET {{api}}/trainers/1
+
+### Cadastra um treinador (máximo de 6 Pokémon no time)
+POST {{api}}/trainers
+Content-Type: application/json
+
+{
+  "name": "Red",
+  "role": "Campeão",
+  "badges": 8,
+  "pokemonIds": [25, 3, 6, 9, 131, 143]
+}
+
+### Atualiza um treinador
+PUT {{api}}/trainers/13
+Content-Type: application/json
+
+{
+  "name": "Red",
+  "role": "Campeão",
+  "badges": 8,
+  "pokemonIds": [25, 6]
+}
+
+### Remove um treinador
+DELETE {{api}}/trainers/13
