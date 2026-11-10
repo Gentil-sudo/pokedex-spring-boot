@@ -1,0 +1,16 @@
+# Credenciais / variáveis de ambiente
+.env
+.env.*
+!.env.example
+
+# Dependências e builds
+node_modules/
+dist/
+target/
+
+# IDEs e sistema
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db
