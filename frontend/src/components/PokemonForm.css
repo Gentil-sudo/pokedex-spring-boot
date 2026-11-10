@@ -1,0 +1,171 @@
+.pokemon-form {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 18px;
+  align-items: start;
+}
+
+.form-preview {
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  aspect-ratio: 1;
+  border-radius: 14px;
+  color: white;
+}
+
+.form-preview-image {
+  width: 80%;
+  height: 75%;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 8px rgba(0, 0, 0, 0.3));
+}
+
+span.form-preview-image {
+  font-size: 5rem;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.form-preview-total {
+  padding: 2px 12px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.25);
+  font-weight: 800;
+}
+
+.form-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+
+.form-row {
+  display: flex;
+  gap: 10px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.field-id {
+  width: 120px;
+  flex-shrink: 0;
+}
+
+.field-grow {
+  flex: 1;
+}
+
+.pokemon-form input[type='text'],
+.pokemon-form input[type='url'],
+.pokemon-form input[type='number'],
+.pokemon-form select {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font: inherit;
+  font-weight: 600;
+  background: var(--screen);
+  color: var(--text);
+}
+
+.pokemon-form input:disabled {
+  background: var(--surface);
+  color: var(--muted);
+  cursor: not-allowed;
+}
+
+.pokemon-form input:focus-visible,
+.pokemon-form select:focus-visible {
+  outline: 2px solid #38bdf8;
+  outline-offset: 1px;
+}
+
+.stats-fieldset {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px 12px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.stats-fieldset legend {
+  padding: 0 6px;
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.stat-input {
+  display: grid;
+  grid-template-columns: 96px 1fr 72px;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.92rem;
+  color: var(--muted);
+}
+
+.stat-input input[type='range'] {
+  width: 100%;
+  accent-color: var(--red);
+}
+
+.stat-input input[type='number'] {
+  padding: 5px 8px;
+  text-align: right;
+}
+
+.stat-input .field-error {
+  grid-column: 1 / -1;
+}
+
+.field-error {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #dc2626;
+}
+
+@media (max-width: 640px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-preview {
+    position: static;
+    width: 140px;
+    justify-self: center;
+  }
+
+  .form-row {
+    flex-direction: column;
+  }
+
+  .field-id {
+    width: 100%;
+  }
+
+  .stat-input {
+    grid-template-columns: 80px 1fr 64px;
+    gap: 8px;
+  }
+}
