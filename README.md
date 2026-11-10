@@ -9,7 +9,7 @@ Atividade 04 de **Desenvolvimento e Integração de Aplicações Web**: a Pokéd
 Script_Pokedex.sql ──► MongoDB (Atlas) ──► Spring Boot REST API ──► React + Vite
 ```
 
-**Dupla:** _NOME DO INTEGRANTE 1_ e _NOME DO INTEGRANTE 2_ (pair programming)
+**Dupla (pair programming):** Enzo Gentil Xavier Barroso e Rafael Gomes Antunes de Oliveira
 
 ![Pokédex](docs/pokedex.png)
 
