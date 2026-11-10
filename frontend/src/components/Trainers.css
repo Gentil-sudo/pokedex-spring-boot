@@ -1,0 +1,187 @@
+.trainer-view {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 16px;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.trainer-toolbar {
+  display: flex;
+  gap: 8px;
+}
+
+.trainer-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  padding: 0 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--screen);
+  color: var(--muted);
+}
+
+.trainer-search input[type='text'] {
+  flex: 1;
+  border: none;
+  padding: 9px 0;
+  background: transparent;
+}
+
+.trainer-search input:focus-visible {
+  outline: none;
+}
+
+.trainer-search:focus-within {
+  outline: 2px solid #38bdf8;
+  outline-offset: 2px;
+}
+
+.trainer-toolbar select {
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font: inherit;
+  background: var(--screen);
+  color: var(--text);
+}
+
+.trainer-empty {
+  text-align: center;
+  padding: 40px 0;
+}
+
+.trainer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  gap: 12px;
+}
+
+.trainer-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  background: var(--surface);
+  transition: border-color 0.3s, transform 0.2s, box-shadow 0.2s;
+}
+
+.trainer-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+}
+
+.trainer-card.highlighted {
+  border-color: var(--red);
+  animation: pulse 1s ease-out 2;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(220, 10, 45, 0.5); }
+  100% { box-shadow: 0 0 0 12px rgba(220, 10, 45, 0); }
+}
+
+.trainer-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.trainer-card-header h3 {
+  font-size: 1.25rem;
+}
+
+.trainer-avatar {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: linear-gradient(160deg, var(--red-light), var(--red-dark));
+  color: white;
+  font-weight: 700;
+  font-size: 1.3rem;
+  font-family: 'Fredoka', sans-serif;
+}
+
+.trainer-role {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.trainer-badges {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--border);
+  font-size: 1.05rem;
+}
+
+.trainer-badges .earned {
+  color: #eab308;
+}
+
+.trainer-badges span {
+  margin-left: 6px;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--muted);
+}
+
+.trainer-pokemon {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+
+.trainer-pokemon button {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: 100%;
+  padding: 4px 2px;
+  border: 2px solid transparent;
+  background: var(--screen);
+  color: var(--text);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.trainer-pokemon button:hover {
+  background: var(--screen);
+  border-color: var(--red);
+}
+
+.trainer-pokemon button.current {
+  border-color: var(--red);
+}
+
+.trainer-pokemon img {
+  width: 60px;
+  height: 60px;
+  image-rendering: pixelated;
+}
+
+.trainer-pokemon span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+@media (max-width: 640px) {
+  .trainer-view {
+    overflow-y: visible;
+  }
+
+  .trainer-toolbar {
+    flex-direction: column;
+  }
+}
