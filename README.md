@@ -53,7 +53,7 @@ e tela amigável quando o backend está desligado.
 | Camada | Tecnologias |
 | --- | --- |
 | Frontend | React 19, Vite 8, React Icons, React Compiler, ESLint |
-| Backend | Java 21+, Spring Boot 4.1 (Spring Web MVC, Spring Data MongoDB, Bean Validation), JUnit 5, Mockito |
+| Backend | Java 25, Spring Boot 4.1 (Spring Web MVC, Spring Data MongoDB, Bean Validation), JUnit 5, Mockito |
 | Banco | MongoDB (Atlas ou local) |
 | Imagens | Sprites e artes oficiais do repositório [PokeAPI/sprites](https://github.com/PokeAPI/sprites) (carregadas pela URL, a partir do número do Pokémon) |
 
@@ -61,7 +61,7 @@ e tela amigável quando o backend está desligado.
 
 ## 📋 Pré-requisitos
 
-- **JDK 21 ou superior** (`java -version`). O Maven não precisa ser instalado: o projeto usa o *Maven Wrapper* (`mvnw`).
+- **JDK 25** (`java -version` deve mostrar 25). O Maven não precisa ser instalado: o projeto usa o *Maven Wrapper* (`mvnw`).
 - **Node.js 20.19+** (`node -v`).
 - Um banco **MongoDB**: uma conta gratuita no [MongoDB Atlas](https://www.mongodb.com/cloud/atlas/register) (recomendado) ou o MongoDB instalado localmente.
 
